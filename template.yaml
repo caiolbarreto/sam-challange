@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  burger-api-sam
+
+  Sample SAM Template for burger-api-sam
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Architectures:
+        - x86_64
+    CodeUri: rest/
+    Environment:
+        Variables:
+          DATABASE_URL: postgresql://postgres:docker@172.20.0.2:5432/sam-challenge?schema=public
+    Runtime: nodejs20.x
+    Timeout: 3
+  Api:
+    OpenApiVersion: '3.0.0'
+
+Resources:
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 20
+      DBInstanceClass: db.t3.micro
+      Engine: postgres
+      EngineVersion: 15.5
+      MasterUsername: postgres
+      MasterUserPassword: docker
+      DBInstanceIdentifier: sam-challenge
+      PubliclyAccessible: true
+      DBName: postgres
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    DependsOn: DBInstance
+    Properties:
+      Handler: app.lambdaHandler
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /users/
+            Method: get
+            # RestApiId: !Ref UsersApiInstance
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+        Loader:
+        - .prisma=file
+        - .so.node=file
+        AssetNames: '[name]'
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
