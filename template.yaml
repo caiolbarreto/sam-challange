@@ -10,7 +10,7 @@ Globals:
   Function:
     Architectures:
         - x86_64
-    CodeUri: rest/
+    CodeUri: api/
     Environment:
         Variables:
           DATABASE_URL: postgresql://postgres:docker@172.20.0.2:5432/sam-challenge?schema=public
