@@ -1,6 +1,6 @@
-import { Ingredient } from "../entities/ingredient";
+import { Ingredient } from '../entities/ingredient';
 
-export interface IngredientRepository {
-  create(ingredient: Ingredient): Promise<void>
-  getAll(): Promise<Ingredient>;
+export interface IngredientsRepository {
+  create(ingredient: Ingredient): Promise<void>;
+  getAll(): Promise<Ingredient[]>;
 }

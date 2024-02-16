@@ -1,4 +1,4 @@
-import { Either, right } from '../core/either';
+import { Either, right } from '../../core/either';
 import { Ingredient } from '../entities/ingredient';
 import { IngredientRepository } from '../repositories/ingredients-repository';
 
