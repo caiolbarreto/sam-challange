@@ -33,8 +33,8 @@ Resources:
       PubliclyAccessible: true
       DBName: postgres
 
-  SamChallengeFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  CreateIngredientFunction:
+    Type: AWS::Serverless::Function
     DependsOn: DBInstance
     Properties:
       Handler: app.createIngredientHandler
@@ -58,10 +58,85 @@ Resources:
         - .so.node=file
         AssetNames: '[name]'
 
+  GetAllIngredientsFunction:
+    Type: AWS::Serverless::Function
+    DependsOn: DBInstance
+    Properties:
+      Handler: app.getAllIngredientsHandler
+      Events:
+        GetAllIngredients:
+          Type: Api
+          Properties:
+            Path: /ingredients
+            Method: get
+
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+        Loader:
+        - .prisma=file
+        - .so.node=file
+        AssetNames: '[name]'
+
+  UpdateIngredientFunction:
+    Type: AWS::Serverless::Function
+    DependsOn: DBInstance
+    Properties:
+      Handler: app.updateIngredientHandler
+      Events:
+        UpdateIngredient:
+          Type: Api
+          Properties:
+            Path: /ingredients/{id}
+            Method: patch
+
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+        Loader:
+        - .prisma=file
+        - .so.node=file
+        AssetNames: '[name]'
+
+  DeleteIngredientFunction:
+    Type: AWS::Serverless::Function
+    DependsOn: DBInstance
+    Properties:
+      Handler: app.deleteIngredientHandler
+      Events:
+        DeleteIngredient:
+          Type: Api
+          Properties:
+            Path: /ingredients/{id}
+            Method: delete
+
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+        Loader:
+        - .prisma=file
+        - .so.node=file
+        AssetNames: '[name]'
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  SamChallengeFunction:
+  CreateIngredientFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn

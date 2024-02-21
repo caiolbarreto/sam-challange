@@ -1,6 +1,6 @@
-import { Either, right } from '../../core/either';
-import { Ingredient } from '../entities/ingredient';
-import { IngredientRepository } from '../repositories/ingredients-repository';
+import { Either, right } from '../../../core/either';
+import { Ingredient } from '../../entities/ingredient';
+import { IngredientsRepository } from '../../repositories/ingredients-repository';
 
 interface CreateIngredientUseCaseRequest {
   name: string;
@@ -15,7 +15,7 @@ type CreateIngredientUseCaseResponse = Either<
 >;
 
 export class CreateIngredientUseCase {
-  constructor(private ingredientsRepository: IngredientRepository) {}
+  constructor(private ingredientsRepository: IngredientsRepository) {}
 
   async execute({ name, quantity }: CreateIngredientUseCaseRequest): Promise<CreateIngredientUseCaseResponse> {
     const ingredient = Ingredient.create({

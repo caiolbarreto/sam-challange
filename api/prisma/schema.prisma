@@ -16,5 +16,51 @@ model Ingredient {
   name     String
   quantity Int
 
+  snackIngredients SnackIngredients[]
+
   @@map("ingredients")
+}
+
+model Snack {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  price       Int
+  quantity    Int
+
+  snackIngredients SnackIngredients[]
+  orderSnacks      OrderSnacks[]
+
+  @@map("snacks")
+}
+
+model SnackIngredients {
+  id           String @id @default(uuid())
+  snackId      String @map("snack_id")
+  ingredientId String @map("ingredients_id")
+
+  Snack      Snack      @relation(fields: [snackId], references: [id])
+  Ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@map("snack_ingredients")
+}
+
+model Order {
+  id   String   @id @default(uuid())
+  date DateTime @default(now())
+
+  orderSnacks OrderSnacks[]
+
+  @@map("orders")
+}
+
+model OrderSnacks {
+  id      String @id @default(uuid())
+  orderId String @map("order_id")
+  snackId String @map("snack_id")
+
+  Orders Order @relation(fields: [orderId], references: [id])
+  Snack  Snack @relation(fields: [snackId], references: [id])
+
+  @@map("orders_snacks")
 }

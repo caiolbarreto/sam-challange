@@ -1,6 +1,9 @@
-import { Ingredient } from '../entities/ingredient';
+import { Ingredient, UpdateIngredient } from '../entities/ingredient';
 
 export interface IngredientsRepository {
   create(ingredient: Ingredient): Promise<void>;
-  getAll(): Promise<Ingredient[]>;
+  findAll(): Promise<Ingredient[]>;
+  findById(id: string): Promise<Ingredient | null>;
+  update(id: string, ingredient: UpdateIngredient): Promise<void>;
+  delete(id: string): Promise<void>;
 }

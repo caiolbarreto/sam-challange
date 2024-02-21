@@ -6,6 +6,11 @@ export interface IngredientProps {
   quantity: number;
 }
 
+export interface UpdateIngredient {
+  name?: string;
+  quantity?: number;
+}
+
 export class Ingredient extends Entity<IngredientProps> {
   get name() {
     return this.props.name;
