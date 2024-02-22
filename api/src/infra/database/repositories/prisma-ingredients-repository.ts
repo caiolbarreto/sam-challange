@@ -4,7 +4,7 @@ import { IngredientsRepository } from '../../../domain/repositories/ingredients-
 import { PrismaIngredientMapper } from '../mappers/prisma-ingredient-mapper';
 
 export class PrismaIngredientsRepository implements IngredientsRepository {
-  constructor(private prisma = new PrismaClient()) {}
+  private prisma = new PrismaClient();
 
   async create(ingredient: Ingredient): Promise<void> {
     const data = PrismaIngredientMapper.toPrisma(ingredient);

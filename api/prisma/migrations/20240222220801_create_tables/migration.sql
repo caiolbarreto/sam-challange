@@ -1,8 +1,18 @@
 -- CreateTable
-CREATE TABLE "snacks" (
+CREATE TABLE "ingredients" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
+
+    CONSTRAINT "ingredients_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "snacks" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
 
     CONSTRAINT "snacks_pkey" PRIMARY KEY ("id")
 );
@@ -12,6 +22,7 @@ CREATE TABLE "snack_ingredients" (
     "id" TEXT NOT NULL,
     "snack_id" TEXT NOT NULL,
     "ingredients_id" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
 
     CONSTRAINT "snack_ingredients_pkey" PRIMARY KEY ("id")
 );
@@ -29,6 +40,7 @@ CREATE TABLE "orders_snacks" (
     "id" TEXT NOT NULL,
     "order_id" TEXT NOT NULL,
     "snack_id" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
 
     CONSTRAINT "orders_snacks_pkey" PRIMARY KEY ("id")
 );

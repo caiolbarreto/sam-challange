@@ -6,6 +6,12 @@ const createSnackBodySchema = z.object({
   name: z.string(),
   description: z.string(),
   price: z.number(),
+  ingredientsDetails: z.array(
+    z.object({
+      id: z.string().uuid(),
+      quantity: z.number(),
+    }),
+  ),
 });
 
 export type CreateSnackBodySchema = z.infer<typeof createSnackBodySchema>;
@@ -13,10 +19,10 @@ export type CreateSnackBodySchema = z.infer<typeof createSnackBodySchema>;
 export class CreateSnackController {
   constructor(private createSnack: CreateSnackUseCase) {}
 
-  async handle({ name, description, price }: CreateSnackBodySchema) {
-    createSnackBodySchema.parse({ name, description, price });
+  async handle({ name, description, price, ingredientsDetails }: CreateSnackBodySchema) {
+    createSnackBodySchema.parse({ name, description, price, ingredientsDetails });
 
-    const result = await this.createSnack.execute({ name, description, price });
+    const result = await this.createSnack.execute({ name, description, price, ingredientsDetails });
 
     if (result.isLeft()) {
       throw new BadRequest();

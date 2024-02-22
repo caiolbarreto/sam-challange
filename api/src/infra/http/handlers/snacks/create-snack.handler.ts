@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { CreateSnackController } from '../../controllers/snacks/create-snack.controller';
 import { CreateSnackUseCase } from '../../../../domain/use-cases/snacks/create-snack';
 import { PrismaSnacksRepository } from '../../../database/repositories/prisma-snacks-repository';
+import { PrismaSnackIngredientsRepository } from '../../../database/repositories/prisma-snack-ingredients-repository';
 
 export class CreateSnackHandler {
   constructor(private createSnackController: CreateSnackController) {}
@@ -15,7 +16,8 @@ export class CreateSnackHandler {
   };
 }
 
-const snackRepository = new PrismaSnacksRepository();
+const prismaSnackIngredientsRepository = new PrismaSnackIngredientsRepository();
+const snackRepository = new PrismaSnacksRepository(prismaSnackIngredientsRepository);
 const createSnackUseCase = new CreateSnackUseCase(snackRepository);
 const createSnackController = new CreateSnackController(createSnackUseCase);
 
