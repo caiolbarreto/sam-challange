@@ -1,6 +1,6 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { GetAllIngredientsController } from '../../controllers/ingredients/get-all-ingredients.controller';
-import { GetAllIngredientsUseCase } from '../../../../domain/use-cases/ingredients/get-all-ingredients';
+import { GetAllIngredientsController } from '../../controllers/ingredients/fetch-all-ingredients.controller';
+import { FetchAllIngredientsUseCase } from '../../../../domain/use-cases/ingredients/fetch-all-ingredients';
 import { PrismaIngredientsRepository } from '../../../database/repositories/prisma-ingredients-repository';
 
 export class GetAllIngredientsHandler {
@@ -14,7 +14,7 @@ export class GetAllIngredientsHandler {
 }
 
 const ingredientRepository = new PrismaIngredientsRepository();
-const getAllIngredientsUseCase = new GetAllIngredientsUseCase(ingredientRepository);
+const getAllIngredientsUseCase = new FetchAllIngredientsUseCase(ingredientRepository);
 const getAllIngredientsController = new GetAllIngredientsController(getAllIngredientsUseCase);
 
 export const getAllIngredientsHandler = new GetAllIngredientsHandler(getAllIngredientsController).lambdaHandler;

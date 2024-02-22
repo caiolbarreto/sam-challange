@@ -7,6 +7,7 @@ import { createIngredientHandler } from './src/infra/http/handlers/ingredients/c
 import { getAllIngredientsHandler } from './src/infra/http/handlers/ingredients/get-all-ingredients.handler';
 import { updateIngredientHandler } from './src/infra/http/handlers/ingredients/update-ingredient.handler';
 import { deleteIngredientHandler } from './src/infra/http/handlers/ingredients/delete-ingredient.handler';
+import { createSnackHandler } from './src/infra/http/handlers/snacks/create-snack.handler';
 
 if (process.env.NODE_ENV !== 'production') {
   console.debug(schema, x, l);
@@ -22,4 +23,10 @@ if (process.env.NODE_ENV !== 'production') {
  *
  */
 
-export { createIngredientHandler, getAllIngredientsHandler, updateIngredientHandler, deleteIngredientHandler };
+export {
+  createIngredientHandler,
+  getAllIngredientsHandler,
+  updateIngredientHandler,
+  deleteIngredientHandler,
+  createSnackHandler,
+};

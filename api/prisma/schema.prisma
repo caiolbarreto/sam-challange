@@ -26,7 +26,6 @@ model Snack {
   name        String
   description String
   price       Int
-  quantity    Int
 
   snackIngredients SnackIngredients[]
   orderSnacks      OrderSnacks[]

@@ -45,7 +45,7 @@ Resources:
             Path: /ingredients
             Method: post
 
-    Metadata: # Manage esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
@@ -70,7 +70,7 @@ Resources:
             Path: /ingredients
             Method: get
 
-    Metadata: # Manage esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
@@ -95,7 +95,7 @@ Resources:
             Path: /ingredients/{id}
             Method: patch
 
-    Metadata: # Manage esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
@@ -120,7 +120,32 @@ Resources:
             Path: /ingredients/{id}
             Method: delete
 
-    Metadata: # Manage esbuild properties
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+        Loader:
+        - .prisma=file
+        - .so.node=file
+        AssetNames: '[name]'
+
+  CreateSnackFunction:
+    Type: AWS::Serverless::Function
+    DependsOn: DBInstance
+    Properties:
+      Handler: app.createSnackHandler
+      Events:
+        CreateSnack:
+          Type: Api
+          Properties:
+            Path: /snacks
+            Method: post
+
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
