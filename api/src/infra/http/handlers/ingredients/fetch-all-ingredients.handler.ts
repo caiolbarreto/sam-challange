@@ -1,13 +1,13 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { GetAllIngredientsController } from '../../controllers/ingredients/fetch-all-ingredients.controller';
+import { FetchAllIngredientsController } from '../../controllers/ingredients/fetch-all-ingredients.controller';
 import { FetchAllIngredientsUseCase } from '../../../../domain/use-cases/ingredients/fetch-all-ingredients';
 import { PrismaIngredientsRepository } from '../../../database/repositories/prisma-ingredients-repository';
 
-export class GetAllIngredientsHandler {
-  constructor(private getAllIngredientsController: GetAllIngredientsController) {}
+export class FetchAllIngredientsHandler {
+  constructor(private fetchAllIngredientsController: FetchAllIngredientsController) {}
 
   public lambdaHandler = async (): Promise<APIGatewayProxyResult> => {
-    const ingredients = await this.getAllIngredientsController.handle();
+    const ingredients = await this.fetchAllIngredientsController.handle();
 
     return { statusCode: 200, body: JSON.stringify(ingredients) } as APIGatewayProxyResult;
   };
@@ -15,6 +15,6 @@ export class GetAllIngredientsHandler {
 
 const ingredientRepository = new PrismaIngredientsRepository();
 const getAllIngredientsUseCase = new FetchAllIngredientsUseCase(ingredientRepository);
-const getAllIngredientsController = new GetAllIngredientsController(getAllIngredientsUseCase);
+const getAllIngredientsController = new FetchAllIngredientsController(getAllIngredientsUseCase);
 
-export const getAllIngredientsHandler = new GetAllIngredientsHandler(getAllIngredientsController).lambdaHandler;
+export const fetchAllIngredientsHandler = new FetchAllIngredientsHandler(getAllIngredientsController).lambdaHandler;

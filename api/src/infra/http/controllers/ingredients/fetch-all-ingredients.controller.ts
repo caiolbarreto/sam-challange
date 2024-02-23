@@ -2,7 +2,7 @@ import { FetchAllIngredientsUseCase } from '../../../../domain/use-cases/ingredi
 import { IngredientPresenter } from '../../presenters/ingredient-presenter';
 import { BadRequest } from 'http-responses-ts';
 
-export class GetAllIngredientsController {
+export class FetchAllIngredientsController {
   constructor(private createIngredient: FetchAllIngredientsUseCase) {}
 
   async handle() {

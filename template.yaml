@@ -58,13 +58,13 @@ Resources:
         - .so.node=file
         AssetNames: '[name]'
 
-  GetAllIngredientsFunction:
+  FetchAllIngredientsFunction:
     Type: AWS::Serverless::Function
     DependsOn: DBInstance
     Properties:
-      Handler: app.getAllIngredientsHandler
+      Handler: app.fetchAllIngredientsHandler
       Events:
-        GetAllIngredients:
+        FetchAllIngredients:
           Type: Api
           Properties:
             Path: /ingredients
@@ -169,6 +169,31 @@ Resources:
           Properties:
             Path: /snacks/{id}
             Method: delete
+
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+        Loader:
+        - .prisma=file
+        - .so.node=file
+        AssetNames: '[name]'
+
+  FetchAllSnacksFunction:
+    Type: AWS::Serverless::Function
+    DependsOn: DBInstance
+    Properties:
+      Handler: app.fetchAllSnacksHandler
+      Events:
+        FetchAllSnacks:
+          Type: Api
+          Properties:
+            Path: /snacks
+            Method: get
 
     Metadata:
       BuildMethod: esbuild
