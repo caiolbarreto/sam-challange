@@ -28,7 +28,7 @@ model Snack {
   price       Int
 
   snackIngredients SnackIngredients[]
-  snackOrders      SnackOrders[]
+  snackOrders      OrderSnacks[]
 
   @@map("snacks")
 }
@@ -49,12 +49,12 @@ model Order {
   id   String   @id @default(uuid())
   date DateTime @default(now())
 
-  snackOrders SnackOrders[]
+  snackOrders OrderSnacks[]
 
   @@map("orders")
 }
 
-model SnackOrders {
+model OrderSnacks {
   id       String @id @default(uuid())
   orderId  String @map("order_id")
   snackId  String @map("snack_id")
@@ -63,5 +63,5 @@ model SnackOrders {
   Orders Order @relation(fields: [orderId], references: [id])
   Snack  Snack @relation(fields: [snackId], references: [id])
 
-  @@map("snack_orders")
+  @@map("order_snacks")
 }
