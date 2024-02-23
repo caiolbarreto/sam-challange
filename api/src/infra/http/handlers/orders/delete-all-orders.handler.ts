@@ -4,7 +4,7 @@ import { DeleteOrderUseCase } from '../../../../domain/use-cases/orders/delete-a
 import { PrismaOrdersRepository } from '../../../database/repositories/prisma-orders-repository';
 import { PrismaOrderSnacksRepository } from '../../../database/repositories/prisma-order-snacks-repository';
 
-export class DeleteOrderHandler {
+export class DeleteAllOrdersHandler {
   constructor(private deleteOrderController: DeleteOrderController) {}
 
   public lambdaHandler = async (): Promise<APIGatewayProxyResult> => {
@@ -19,4 +19,4 @@ const orderRepository = new PrismaOrdersRepository(prismaOrderSnacksRepository);
 const deleteOrderUseCase = new DeleteOrderUseCase(orderRepository);
 const deleteOrderController = new DeleteOrderController(deleteOrderUseCase);
 
-export const deleteOrderHandler = new DeleteOrderHandler(deleteOrderController).lambdaHandler;
+export const deleteAllOrdersHandler = new DeleteAllOrdersHandler(deleteOrderController).lambdaHandler;

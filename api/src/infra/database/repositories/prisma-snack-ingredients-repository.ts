@@ -14,16 +14,6 @@ export class PrismaSnackIngredientsRepository implements SnackIngredientsReposit
     });
   }
 
-  async findManyBySnackId(snackId: string): Promise<SnackIngredients[]> {
-    const snackIngredients = await this.prisma.snackIngredients.findMany({
-      where: {
-        snackId,
-      },
-    });
-
-    return snackIngredients.map(PrismaSnackIngredientsMapper.toDomain);
-  }
-
   async deleteManyBySnackId(snackId: string): Promise<void> {
     await this.prisma.snackIngredients.deleteMany({
       where: {

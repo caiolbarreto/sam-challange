@@ -14,7 +14,6 @@ interface OrderDetails {
 }
 
 interface CreateOrderUseCaseRequest {
-  date: Date;
   orderDetails: OrderDetails[];
 }
 
@@ -27,8 +26,8 @@ export class CreateOrderUseCase {
     private ordersRepository: OrdersRepository,
   ) {}
 
-  async execute({ date, orderDetails }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
-    const order = Order.create({ date });
+  async execute({ orderDetails }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
+    const order = Order.create({ date: new Date() });
 
     const snacksPromises = Promise.all(
       orderDetails.map(async (snack) => {
@@ -39,7 +38,7 @@ export class CreateOrderUseCase {
         }
 
         Promise.all(
-          snackEntity.snackIngredients.getItems().map(async (snackIngredient) => {
+          snackEntity.snackIngredients.map(async (snackIngredient) => {
             const ingredientEntity = await this.ingredientsRepository.findById(snackIngredient.ingredientId.toString());
             const requiredIngredients = snackIngredient.quantity * snack.quantity;
 

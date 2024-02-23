@@ -10,6 +10,9 @@ import { deleteIngredientHandler } from './src/infra/http/handlers/ingredients/d
 import { createSnackHandler } from './src/infra/http/handlers/snacks/create-snack.handler';
 import { deleteSnackHandler } from './src/infra/http/handlers/snacks/delete-snack.handler';
 import { fetchAllSnacksHandler } from './src/infra/http/handlers/snacks/fetch-all-snacks.handler';
+import { createOrderHandler } from './src/infra/http/handlers/orders/create-order.handler';
+import { fetchAllOrdersHandler } from './src/infra/http/handlers/orders/fetch-all-orders.handler';
+import { deleteAllOrdersHandler } from './src/infra/http/handlers/orders/delete-all-orders.handler';
 
 if (process.env.NODE_ENV !== 'production') {
   console.debug(schema, x, l);
@@ -33,4 +36,7 @@ export {
   createSnackHandler,
   deleteSnackHandler,
   fetchAllSnacksHandler,
+  createOrderHandler,
+  fetchAllOrdersHandler,
+  deleteAllOrdersHandler,
 };

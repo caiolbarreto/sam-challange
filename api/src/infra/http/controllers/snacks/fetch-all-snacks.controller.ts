@@ -1,12 +1,12 @@
 import { FetchAllSnacksUseCase } from '../../../../domain/use-cases/snacks/fetch-all-snacks';
-import { SnackPresenter } from '../../presenters/snack-presenter';
+import { SnackDetailsPresenter } from '../../presenters/snack-details-presenter';
 import { BadRequest } from 'http-responses-ts';
 
 export class FetchAllSnacksController {
-  constructor(private createSnack: FetchAllSnacksUseCase) {}
+  constructor(private fetchAllSnacks: FetchAllSnacksUseCase) {}
 
   async handle() {
-    const result = await this.createSnack.execute();
+    const result = await this.fetchAllSnacks.execute();
 
     if (result.isLeft()) {
       throw new BadRequest();
@@ -14,6 +14,6 @@ export class FetchAllSnacksController {
 
     const snacks = result.value.snacks;
 
-    return snacks.map(SnackPresenter.toHTTP);
+    return snacks.map(SnackDetailsPresenter.toHTTP);
   }
 }

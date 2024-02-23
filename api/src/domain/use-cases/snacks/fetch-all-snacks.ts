@@ -1,11 +1,11 @@
 import { Either, right } from '../../../core/either';
-import { Snack } from '../../entities/snack';
+import { SnackDetails } from '../../entities/snack-details';
 import { SnacksRepository } from '../../repositories/snacks-repository';
 
 type FetchAllSnacksUseCaseResponse = Either<
   null,
   {
-    snacks: Snack[];
+    snacks: SnackDetails[];
   }
 >;
 
