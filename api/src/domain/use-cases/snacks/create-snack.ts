@@ -5,7 +5,7 @@ import { SnackIngredients } from '../../entities/snack-ingredients';
 import { SnackIngredientsList } from '../../entities/snack-ingredients-list';
 import { SnacksRepository } from '../../repositories/snacks-repository';
 
-interface IngredientBody {
+interface IngredientDetails {
   id: string;
   quantity: number;
 }
@@ -14,7 +14,7 @@ interface CreateSnackUseCaseRequest {
   name: string;
   description: string;
   price: number;
-  ingredientsDetails: IngredientBody[];
+  ingredientsDetails: IngredientDetails[];
 }
 
 type CreateSnackUseCaseResponse = Either<
