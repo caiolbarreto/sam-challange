@@ -6,7 +6,7 @@ import { SnackIngredientsList } from '../../entities/snack-ingredients-list';
 import { SnacksRepository } from '../../repositories/snacks-repository';
 
 interface IngredientDetails {
-  id: string;
+  ingredientId: string;
   quantity: number;
 }
 
@@ -42,7 +42,7 @@ export class CreateSnackUseCase {
     const ingredients = ingredientsDetails.map((ingredient) => {
       return SnackIngredients.create({
         snackId: snack.id,
-        ingredientId: new UniqueEntityID(ingredient.id),
+        ingredientId: new UniqueEntityID(ingredient.ingredientId),
         quantity: ingredient.quantity,
       });
     });

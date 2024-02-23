@@ -28,7 +28,7 @@ model Snack {
   price       Int
 
   snackIngredients SnackIngredients[]
-  snackOrders      OrderSnacks[]
+  orderSnacks      OrderSnacks[]
 
   @@map("snacks")
 }
@@ -49,7 +49,7 @@ model Order {
   id   String   @id @default(uuid())
   date DateTime @default(now())
 
-  snackOrders OrderSnacks[]
+  orderSnacks OrderSnacks[]
 
   @@map("orders")
 }

@@ -8,7 +8,7 @@ const createSnackBodySchema = z.object({
   price: z.number(),
   ingredientsDetails: z.array(
     z.object({
-      id: z.string().uuid(),
+      ingredientId: z.string().uuid(),
       quantity: z.number(),
     }),
   ),
