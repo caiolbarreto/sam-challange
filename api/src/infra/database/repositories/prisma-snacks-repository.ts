@@ -26,7 +26,7 @@ export class PrismaSnacksRepository implements SnacksRepository {
   }
 
   async findById(snackId: string): Promise<Snack | null> {
-    const snack = await this.prisma.snack.findFirst({
+    const snack = await this.prisma.snack.findUnique({
       where: {
         id: snackId,
       },
