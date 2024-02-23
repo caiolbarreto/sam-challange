@@ -20,7 +20,13 @@ export class PrismaSnacksRepository implements SnacksRepository {
   }
 
   async findAll(): Promise<Snack[]> {
-    const snacks = await this.prisma.snack.findMany();
+    const snacks = await this.prisma.snack.findMany({
+      include: {
+        snackIngredients: true,
+      },
+    });
+
+    console.log('snacks', JSON.stringify(snacks));
 
     return snacks.map(PrismaSnackMapper.toDomain);
   }

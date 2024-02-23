@@ -39,8 +39,8 @@ model SnackIngredients {
   ingredientId String @map("ingredients_id")
   quantity     Int
 
-  Snack      Snack      @relation(fields: [snackId], references: [id])
-  Ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+  snack      Snack      @relation(fields: [snackId], references: [id])
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id])
 
   @@map("snack_ingredients")
 }
@@ -60,8 +60,8 @@ model OrderSnacks {
   snackId  String @map("snack_id")
   quantity Int
 
-  Orders Order @relation(fields: [orderId], references: [id])
-  Snack  Snack @relation(fields: [snackId], references: [id])
+  order Order @relation(fields: [orderId], references: [id])
+  snack Snack @relation(fields: [snackId], references: [id])
 
   @@map("order_snacks")
 }
