@@ -20,10 +20,10 @@ export class PrismaIngredientsRepository implements IngredientsRepository {
     return ingredients.map(PrismaIngredientMapper.toDomain);
   }
 
-  async findById(id: string): Promise<Ingredient | null> {
+  async findById(ingredientId: string): Promise<Ingredient | null> {
     const ingredient = await this.prisma.ingredient.findUnique({
       where: {
-        id,
+        id: ingredientId,
       },
     });
 
@@ -34,19 +34,19 @@ export class PrismaIngredientsRepository implements IngredientsRepository {
     return PrismaIngredientMapper.toDomain(ingredient);
   }
 
-  async update(id: string, content: UpdateIngredient): Promise<void> {
+  async update(ingredientId: string, content: UpdateIngredient): Promise<void> {
     await this.prisma.ingredient.update({
       where: {
-        id,
+        id: ingredientId,
       },
       data: content,
     });
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(ingredientId: string): Promise<void> {
     await this.prisma.ingredient.delete({
       where: {
-        id,
+        id: ingredientId,
       },
     });
   }

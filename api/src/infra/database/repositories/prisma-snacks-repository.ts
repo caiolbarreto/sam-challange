@@ -25,10 +25,26 @@ export class PrismaSnacksRepository implements SnacksRepository {
     return snacks.map(PrismaSnackMapper.toDomain);
   }
 
-  async delete(id: string): Promise<void> {
+  async findById(snackId: string): Promise<Snack | null> {
+    const snack = await this.prisma.snack.findFirst({
+      where: {
+        id: snackId,
+      },
+    });
+
+    if (!snack) {
+      return null;
+    }
+
+    return PrismaSnackMapper.toDomain(snack);
+  }
+
+  async delete(snackId: string): Promise<void> {
+    await this.snackIngredientsRepository.deleteManyBySnackId(snackId);
+
     await this.prisma.snack.delete({
       where: {
-        id,
+        id: snackId,
       },
     });
   }

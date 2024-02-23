@@ -8,6 +8,7 @@ import { getAllIngredientsHandler } from './src/infra/http/handlers/ingredients/
 import { updateIngredientHandler } from './src/infra/http/handlers/ingredients/update-ingredient.handler';
 import { deleteIngredientHandler } from './src/infra/http/handlers/ingredients/delete-ingredient.handler';
 import { createSnackHandler } from './src/infra/http/handlers/snacks/create-snack.handler';
+import { deleteSnackHandler } from './src/infra/http/handlers/snacks/delete-snack.handler';
 
 if (process.env.NODE_ENV !== 'production') {
   console.debug(schema, x, l);
@@ -29,4 +30,5 @@ export {
   updateIngredientHandler,
   deleteIngredientHandler,
   createSnackHandler,
+  deleteSnackHandler,
 };
