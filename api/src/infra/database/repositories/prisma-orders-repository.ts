@@ -39,8 +39,8 @@ export class PrismaOrdersRepository implements OrdersRepository {
     return orders.map(PrismaOrderMapper.toDomain);
   }
 
-  async deleteMany(snackId: string): Promise<void> {
-    await this.orderSnacksRepository.deleteManyByOrderId(snackId);
+  async deleteMany(): Promise<void> {
+    await this.orderSnacksRepository.deleteMany();
 
     await this.prisma.order.deleteMany();
   }

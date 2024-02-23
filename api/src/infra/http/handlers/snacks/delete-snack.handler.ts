@@ -16,8 +16,8 @@ export class DeleteSnackHandler {
   };
 }
 
-const prismaSnackIngredientsRepository = new PrismaSnackIngredientsRepository();
-const snackRepository = new PrismaSnacksRepository(prismaSnackIngredientsRepository);
+const snackIngredientsRepository = new PrismaSnackIngredientsRepository();
+const snackRepository = new PrismaSnacksRepository(snackIngredientsRepository);
 const deleteSnackUseCase = new DeleteSnackUseCase(snackRepository);
 const deleteSnackController = new DeleteSnackController(deleteSnackUseCase);
 

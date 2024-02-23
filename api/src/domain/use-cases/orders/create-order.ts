@@ -22,9 +22,9 @@ type CreateOrderUseCaseResponse = Either<Error | NotFound, { order: Order }>;
 
 export class CreateOrderUseCase {
   constructor(
-    private ordersRepository: OrdersRepository,
-    private snacksRepository: SnacksRepository,
     private ingredientsRepository: IngredientsRepository,
+    private snacksRepository: SnacksRepository,
+    private ordersRepository: OrdersRepository,
   ) {}
 
   async execute({ date, orderDetails }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {

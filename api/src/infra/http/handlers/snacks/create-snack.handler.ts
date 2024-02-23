@@ -16,8 +16,8 @@ export class CreateSnackHandler {
   };
 }
 
-const prismaSnackIngredientsRepository = new PrismaSnackIngredientsRepository();
-const snackRepository = new PrismaSnacksRepository(prismaSnackIngredientsRepository);
+const snackIngredientsRepository = new PrismaSnackIngredientsRepository();
+const snackRepository = new PrismaSnacksRepository(snackIngredientsRepository);
 const createSnackUseCase = new CreateSnackUseCase(snackRepository);
 const createSnackController = new CreateSnackController(createSnackUseCase);
 
