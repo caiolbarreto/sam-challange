@@ -5,7 +5,6 @@ export class OrderPresenter {
     return {
       id: order.id.toString(),
       date: order.date,
-      orderDetails: order.orderSnacks,
     };
   }
 }

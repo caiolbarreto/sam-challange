@@ -1,11 +1,11 @@
 import { Either, right } from '../../../core/either';
-import { Order } from '../../entities/order';
+import { OrderDetails } from '../../entities/order-details';
 import { OrdersRepository } from '../../repositories/orders-repository';
 
 type FetchAllOrdersUseCaseResponse = Either<
   null,
   {
-    orders: Order[];
+    orders: OrderDetails[];
   }
 >;
 

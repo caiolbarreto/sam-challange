@@ -1,5 +1,5 @@
 import { FetchAllOrdersUseCase } from '../../../../domain/use-cases/orders/fetch-all-orders';
-import { OrderPresenter } from '../../presenters/order-presenter';
+import { OrderDetailsPresenter } from '../../presenters/order-details-presenter';
 import { BadRequest } from 'http-responses-ts';
 
 export class FetchAllOrdersController {
@@ -14,6 +14,6 @@ export class FetchAllOrdersController {
 
     const orders = result.value.orders;
 
-    return orders.map(OrderPresenter.toHTTP);
+    return orders.map(OrderDetailsPresenter.toHTTP);
   }
 }

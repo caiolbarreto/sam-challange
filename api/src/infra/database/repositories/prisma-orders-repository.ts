@@ -3,6 +3,8 @@ import { Order } from '../../../domain/entities/order';
 import { OrdersRepository } from '../../../domain/repositories/orders-repository';
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
 import { OrderSnacksRepository } from '../../../domain/repositories/order-snacks-repository';
+import { PrismaOrderDetailsMapper } from '../mappers/prisma-order-details-mapper';
+import { OrderDetails } from '../../../domain/entities/order-details';
 
 export class PrismaOrdersRepository implements OrdersRepository {
   private prisma = new PrismaClient();
@@ -33,10 +35,14 @@ export class PrismaOrdersRepository implements OrdersRepository {
     return PrismaOrderMapper.toDomain(order);
   }
 
-  async findAll(): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany();
+  async findAll(): Promise<OrderDetails[]> {
+    const orders = await this.prisma.order.findMany({
+      include: {
+        orderSnacks: true
+      }
+    });
 
-    return orders.map(PrismaOrderMapper.toDomain);
+    return orders.map(PrismaOrderDetailsMapper.toDomain);
   }
 
   async deleteMany(): Promise<void> {
