@@ -1,4 +1,4 @@
-import { Ingredient } from '../../../domain/entities/ingredient';
+import { Ingredient } from '../../../domain/entities/ingredient'
 
 export class IngredientPresenter {
   static toHTTP(ingredient: Ingredient) {
@@ -6,6 +6,6 @@ export class IngredientPresenter {
       id: ingredient.id.toString(),
       name: ingredient.name,
       quantity: ingredient.quantity,
-    };
+    }
   }
 }

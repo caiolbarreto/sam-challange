@@ -4,13 +4,13 @@
  */
 
 export default {
-    transform: {
-        '^.+\\.ts?$': 'ts-jest',
-    },
-    clearMocks: true,
-    collectCoverage: true,
-    coverageDirectory: 'coverage',
-    coverageProvider: 'v8',
-    testMatch: ['**/__tests__/*.test.ts'],
-    exclude: ['app.ts'],
-};
+  transform: {
+    '^.+\\.ts?$': 'ts-jest',
+  },
+  clearMocks: true,
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  coverageProvider: 'v8',
+  testMatch: ['**/__tests__/*.test.ts'],
+  exclude: ['app.ts'],
+}

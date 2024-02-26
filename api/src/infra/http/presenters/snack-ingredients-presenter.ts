@@ -1,4 +1,4 @@
-import { SnackIngredients } from '../../../domain/entities/snack-ingredients';
+import { SnackIngredients } from '../../../domain/entities/snack-ingredients'
 
 export class SnackIngredientsPresenter {
   static toHTTP(snackIngredients: SnackIngredients) {
@@ -7,6 +7,6 @@ export class SnackIngredientsPresenter {
       snackId: snackIngredients.snackId.toString(),
       ingredientId: snackIngredients.ingredientId.toString(),
       quantity: snackIngredients.quantity,
-    };
+    }
   }
 }

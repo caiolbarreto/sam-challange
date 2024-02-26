@@ -1,6 +1,6 @@
-import { UniqueEntityID } from '../../../core/unique-entity-id';
-import { Snack } from '../../../domain/entities/snack';
-import { Snack as PrismaSnack, Prisma } from '@prisma/client';
+import { UniqueEntityID } from '../../../core/unique-entity-id'
+import { Snack } from '../../../domain/entities/snack'
+import { Snack as PrismaSnack, Prisma } from '@prisma/client'
 
 export class PrismaSnackMapper {
   static toDomain(raw: PrismaSnack): Snack {
@@ -11,7 +11,7 @@ export class PrismaSnackMapper {
         price: raw.price,
       },
       new UniqueEntityID(raw.id),
-    );
+    )
   }
 
   static toPrisma(snack: Snack): Prisma.SnackUncheckedCreateInput {
@@ -20,6 +20,6 @@ export class PrismaSnackMapper {
       name: snack.name,
       description: snack.description,
       price: snack.price,
-    };
+    }
   }
 }

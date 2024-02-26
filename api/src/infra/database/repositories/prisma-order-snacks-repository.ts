@@ -1,17 +1,17 @@
-import { PrismaClient } from '@prisma/client';
-import { OrderSnacks } from '../../../domain/entities/order-snacks';
-import { OrderSnacksRepository } from '../../../domain/repositories/order-snacks-repository';
-import { PrismaOrderSnacksMapper } from '../mappers/prisma-order-snacks-mapper';
+import { PrismaClient } from '@prisma/client'
+import { OrderSnacks } from '../../../domain/entities/order-snacks'
+import { OrderSnacksRepository } from '../../../domain/repositories/order-snacks-repository'
+import { PrismaOrderSnacksMapper } from '../mappers/prisma-order-snacks-mapper'
 
 export class PrismaOrderSnacksRepository implements OrderSnacksRepository {
-  private prisma = new PrismaClient();
+  private prisma = new PrismaClient()
 
   async createMany(orderSnacks: OrderSnacks[]): Promise<void> {
-    const data = orderSnacks.map(PrismaOrderSnacksMapper.toPrisma);
+    const data = orderSnacks.map(PrismaOrderSnacksMapper.toPrisma)
 
     await this.prisma.orderSnacks.createMany({
       data,
-    });
+    })
   }
 
   async findManyByOrderId(orderId: string): Promise<OrderSnacks[]> {
@@ -19,12 +19,12 @@ export class PrismaOrderSnacksRepository implements OrderSnacksRepository {
       where: {
         orderId,
       },
-    });
+    })
 
-    return orderSnacks.map(PrismaOrderSnacksMapper.toDomain);
+    return orderSnacks.map(PrismaOrderSnacksMapper.toDomain)
   }
 
   async deleteMany(): Promise<void> {
-    await this.prisma.orderSnacks.deleteMany();
+    await this.prisma.orderSnacks.deleteMany()
   }
 }

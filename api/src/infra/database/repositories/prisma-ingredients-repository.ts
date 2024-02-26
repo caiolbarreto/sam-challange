@@ -1,23 +1,26 @@
-import { PrismaClient } from '@prisma/client';
-import { Ingredient, UpdateIngredient } from '../../../domain/entities/ingredient';
-import { IngredientsRepository } from '../../../domain/repositories/ingredients-repository';
-import { PrismaIngredientMapper } from '../mappers/prisma-ingredient-mapper';
+import { PrismaClient } from '@prisma/client'
+import {
+  Ingredient,
+  UpdateIngredient,
+} from '../../../domain/entities/ingredient'
+import { IngredientsRepository } from '../../../domain/repositories/ingredients-repository'
+import { PrismaIngredientMapper } from '../mappers/prisma-ingredient-mapper'
 
 export class PrismaIngredientsRepository implements IngredientsRepository {
-  private prisma = new PrismaClient();
+  private prisma = new PrismaClient()
 
   async create(ingredient: Ingredient): Promise<void> {
-    const data = PrismaIngredientMapper.toPrisma(ingredient);
+    const data = PrismaIngredientMapper.toPrisma(ingredient)
 
     await this.prisma.ingredient.create({
       data,
-    });
+    })
   }
 
   async findAll(): Promise<Ingredient[]> {
-    const ingredients = await this.prisma.ingredient.findMany();
+    const ingredients = await this.prisma.ingredient.findMany()
 
-    return ingredients.map(PrismaIngredientMapper.toDomain);
+    return ingredients.map(PrismaIngredientMapper.toDomain)
   }
 
   async findById(ingredientId: string): Promise<Ingredient | null> {
@@ -25,13 +28,13 @@ export class PrismaIngredientsRepository implements IngredientsRepository {
       where: {
         id: ingredientId,
       },
-    });
+    })
 
     if (!ingredient) {
-      return null;
+      return null
     }
 
-    return PrismaIngredientMapper.toDomain(ingredient);
+    return PrismaIngredientMapper.toDomain(ingredient)
   }
 
   async update(ingredientId: string, content: UpdateIngredient): Promise<void> {
@@ -40,7 +43,7 @@ export class PrismaIngredientsRepository implements IngredientsRepository {
         id: ingredientId,
       },
       data: content,
-    });
+    })
   }
 
   async delete(ingredientId: string): Promise<void> {
@@ -48,6 +51,6 @@ export class PrismaIngredientsRepository implements IngredientsRepository {
       where: {
         id: ingredientId,
       },
-    });
+    })
   }
 }

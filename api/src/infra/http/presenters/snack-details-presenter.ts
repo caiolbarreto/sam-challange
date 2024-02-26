@@ -1,5 +1,5 @@
-import { SnackDetails } from '../../../domain/entities/snack-details';
-import { SnackIngredientsPresenter } from './snack-ingredients-presenter';
+import { SnackDetails } from '../../../domain/entities/snack-details'
+import { SnackIngredientsPresenter } from './snack-ingredients-presenter'
 
 export class SnackDetailsPresenter {
   static toHTTP(snackDetails: SnackDetails) {
@@ -8,7 +8,9 @@ export class SnackDetailsPresenter {
       name: snackDetails.name,
       description: snackDetails.description,
       price: snackDetails.price,
-      snackIngredients: snackDetails.snackIngredients.map(SnackIngredientsPresenter.toHTTP),
-    };
+      snackIngredients: snackDetails.snackIngredients.map(
+        SnackIngredientsPresenter.toHTTP,
+      ),
+    }
   }
 }

@@ -1,6 +1,6 @@
-import { OrderSnacks } from '../entities/order-snacks';
+import { OrderSnacks } from '../entities/order-snacks'
 
 export interface OrderSnacksRepository {
-  createMany(orderSnacks: OrderSnacks[]): Promise<void>;
-  deleteMany(): Promise<void>;
+  createMany(orderSnacks: OrderSnacks[]): Promise<void>
+  deleteMany(): Promise<void>
 }

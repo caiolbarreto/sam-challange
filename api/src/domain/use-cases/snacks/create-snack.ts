@@ -1,28 +1,28 @@
-import { Either, right } from '../../../core/either';
-import { UniqueEntityID } from '../../../core/unique-entity-id';
-import { Snack } from '../../entities/snack';
-import { SnackIngredients } from '../../entities/snack-ingredients';
-import { SnackIngredientsList } from '../../entities/snack-ingredients-list';
-import { SnacksRepository } from '../../repositories/snacks-repository';
+import { Either, right } from '../../../core/either'
+import { UniqueEntityID } from '../../../core/unique-entity-id'
+import { Snack } from '../../entities/snack'
+import { SnackIngredients } from '../../entities/snack-ingredients'
+import { SnackIngredientsList } from '../../entities/snack-ingredients-list'
+import { SnacksRepository } from '../../repositories/snacks-repository'
 
 interface IngredientDetails {
-  ingredientId: string;
-  quantity: number;
+  ingredientId: string
+  quantity: number
 }
 
 interface CreateSnackUseCaseRequest {
-  name: string;
-  description: string;
-  price: number;
-  ingredientsDetails: IngredientDetails[];
+  name: string
+  description: string
+  price: number
+  ingredientsDetails: IngredientDetails[]
 }
 
 type CreateSnackUseCaseResponse = Either<
   null,
   {
-    snack: Snack;
+    snack: Snack
   }
->;
+>
 
 export class CreateSnackUseCase {
   constructor(private snacksRepository: SnacksRepository) {}
@@ -37,22 +37,22 @@ export class CreateSnackUseCase {
       name,
       description,
       price,
-    });
+    })
 
     const ingredients = ingredientsDetails.map((ingredient) => {
       return SnackIngredients.create({
         snackId: snack.id,
         ingredientId: new UniqueEntityID(ingredient.ingredientId),
         quantity: ingredient.quantity,
-      });
-    });
+      })
+    })
 
-    snack.snackIngredients = new SnackIngredientsList(ingredients);
+    snack.snackIngredients = new SnackIngredientsList(ingredients)
 
-    await this.snacksRepository.create(snack);
+    await this.snacksRepository.create(snack)
 
     return right({
       snack,
-    });
+    })
   }
 }
