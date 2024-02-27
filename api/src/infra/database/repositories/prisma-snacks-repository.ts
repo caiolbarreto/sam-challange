@@ -1,6 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import { Snack } from '../../../domain/entities/snack'
-import { SnacksRepository } from '../../../domain/repositories/snacks-repository'
+import {
+  PaginatedSnacks,
+  SnacksRepository,
+} from '../../../domain/repositories/snacks-repository'
 import { PrismaSnackMapper } from '../mappers/prisma-snack-mapper'
 import { SnackIngredientsRepository } from '../../../domain/repositories/snacks-ingredients-repository'
 import { PrismaSnackDetailsMapper } from '../mappers/prisma-snack-details-mapper'
@@ -23,14 +26,25 @@ export class PrismaSnacksRepository implements SnacksRepository {
     )
   }
 
-  async findAll(): Promise<SnackDetails[]> {
+  async findAll(page = 1, pageSize = 10): Promise<PaginatedSnacks> {
+    const skip = (page - 1) * pageSize
+    const totalCount = await this.prisma.snack.count()
     const snacks = await this.prisma.snack.findMany({
       include: {
         snackIngredients: true,
       },
+      skip,
+      take: pageSize,
     })
 
-    return snacks.map(PrismaSnackDetailsMapper.toDomain)
+    return {
+      data: snacks.map(PrismaSnackDetailsMapper.toDomain),
+      meta: {
+        pageIndex: page,
+        totalCount,
+        perPage: pageSize,
+      },
+    }
   }
 
   async findById(snackId: string): Promise<SnackDetails | null> {

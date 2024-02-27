@@ -3,7 +3,10 @@ import {
   Ingredient,
   UpdateIngredient,
 } from '../../../domain/entities/ingredient'
-import { IngredientsRepository } from '../../../domain/repositories/ingredients-repository'
+import {
+  IngredientsRepository,
+  PaginatedIngredients,
+} from '../../../domain/repositories/ingredients-repository'
 import { PrismaIngredientMapper } from '../mappers/prisma-ingredient-mapper'
 
 export class PrismaIngredientsRepository implements IngredientsRepository {
@@ -17,10 +20,22 @@ export class PrismaIngredientsRepository implements IngredientsRepository {
     })
   }
 
-  async findAll(): Promise<Ingredient[]> {
-    const ingredients = await this.prisma.ingredient.findMany()
+  async findAll(page = 1, pageSize = 10): Promise<PaginatedIngredients> {
+    const skip = (page - 1) * pageSize
+    const totalCount = await this.prisma.ingredient.count()
+    const ingredients = await this.prisma.ingredient.findMany({
+      skip,
+      take: pageSize,
+    })
 
-    return ingredients.map(PrismaIngredientMapper.toDomain)
+    return {
+      data: ingredients.map(PrismaIngredientMapper.toDomain),
+      meta: {
+        pageIndex: page,
+        totalCount,
+        perPage: pageSize,
+      },
+    }
   }
 
   async findById(ingredientId: string): Promise<Ingredient | null> {
