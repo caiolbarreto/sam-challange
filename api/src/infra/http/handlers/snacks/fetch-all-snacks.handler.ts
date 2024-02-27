@@ -1,4 +1,4 @@
-import { APIGatewayProxyResult } from 'aws-lambda'
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { FetchAllSnacksController } from '../../controllers/snacks/fetch-all-snacks.controller'
 import { FetchAllSnacksUseCase } from '../../../../domain/use-cases/snacks/fetch-all-snacks'
 import { PrismaSnacksRepository } from '../../../database/repositories/prisma-snacks-repository'
@@ -7,8 +7,20 @@ import { PrismaSnackIngredientsRepository } from '../../../database/repositories
 export class FetchAllSnacksHandler {
   constructor(private fetchAllSnacksController: FetchAllSnacksController) {}
 
-  public lambdaHandler = async (): Promise<APIGatewayProxyResult> => {
-    const snacks = await this.fetchAllSnacksController.handle()
+  public lambdaHandler = async (
+    event: APIGatewayProxyEvent,
+  ): Promise<APIGatewayProxyResult> => {
+    const queryParams = JSON.stringify(event.queryStringParameters)
+    const parsedParams = JSON.parse(queryParams)
+
+    if (parsedParams) {
+      parsedParams.page = Number(parsedParams.page)
+      parsedParams.pageSize = Number(parsedParams.pageSize)
+    }
+
+    const snacks = await this.fetchAllSnacksController.handle(
+      parsedParams ?? {},
+    )
 
     return {
       statusCode: 200,

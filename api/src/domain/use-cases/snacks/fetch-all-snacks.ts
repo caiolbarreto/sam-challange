@@ -1,19 +1,29 @@
 import { Either, right } from '../../../core/either'
-import { SnackDetails } from '../../entities/snack-details'
-import { SnacksRepository } from '../../repositories/snacks-repository'
+import {
+  PaginatedSnacks,
+  SnacksRepository,
+} from '../../repositories/snacks-repository'
+
+interface FetchAllSnacksUseCaseRequest {
+  page?: number
+  pageSize?: number
+}
 
 type FetchAllSnacksUseCaseResponse = Either<
   null,
   {
-    snacks: SnackDetails[]
+    snacks: PaginatedSnacks
   }
 >
 
 export class FetchAllSnacksUseCase {
   constructor(private snacksRepository: SnacksRepository) {}
 
-  async execute(): Promise<FetchAllSnacksUseCaseResponse> {
-    const snacks = await this.snacksRepository.findAll()
+  async execute({
+    page,
+    pageSize,
+  }: FetchAllSnacksUseCaseRequest): Promise<FetchAllSnacksUseCaseResponse> {
+    const snacks = await this.snacksRepository.findAll(page, pageSize)
 
     return right({
       snacks,
