@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client'
 import { Order } from '../../../domain/entities/order'
-import { OrdersRepository } from '../../../domain/repositories/orders-repository'
+import {
+  OrdersRepository,
+  PaginatedOrders,
+} from '../../../domain/repositories/orders-repository'
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper'
 import { OrderSnacksRepository } from '../../../domain/repositories/order-snacks-repository'
 import { PrismaOrderDetailsMapper } from '../mappers/prisma-order-details-mapper'
-import { OrderDetails } from '../../../domain/entities/order-details'
 
 export class PrismaOrdersRepository implements OrdersRepository {
   private prisma = new PrismaClient()
@@ -35,7 +37,12 @@ export class PrismaOrdersRepository implements OrdersRepository {
     return PrismaOrderMapper.toDomain(order)
   }
 
-  async findAll(startDate?: Date, endDate?: Date): Promise<OrderDetails[]> {
+  async findAll(
+    startDate?: Date,
+    endDate?: Date,
+    page = 1,
+    pageSize = 10,
+  ): Promise<PaginatedOrders> {
     let whereCondition = {}
 
     if (startDate && endDate) {
@@ -47,14 +54,25 @@ export class PrismaOrdersRepository implements OrdersRepository {
       }
     }
 
+    const skip = (page - 1) * pageSize
+    const totalCount = await this.prisma.order.count({ where: whereCondition })
     const orders = await this.prisma.order.findMany({
       where: whereCondition,
       include: {
         orderSnacks: true,
       },
+      skip,
+      take: pageSize,
     })
 
-    return orders.map(PrismaOrderDetailsMapper.toDomain)
+    return {
+      data: orders.map(PrismaOrderDetailsMapper.toDomain),
+      meta: {
+        pageIndex: page,
+        totalCount,
+        perPage: pageSize,
+      },
+    }
   }
 
   async deleteMany(): Promise<void> {

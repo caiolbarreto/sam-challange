@@ -1,16 +1,20 @@
 import { Either, right } from '../../../core/either'
-import { OrderDetails } from '../../entities/order-details'
-import { OrdersRepository } from '../../repositories/orders-repository'
+import {
+  OrdersRepository,
+  PaginatedOrders,
+} from '../../repositories/orders-repository'
 
 interface FetchAllOrdersUseCaseRequest {
   startDate?: Date
   endDate?: Date
+  page?: number
+  pageSize?: number
 }
 
 type FetchAllOrdersUseCaseResponse = Either<
   null,
   {
-    orders: OrderDetails[]
+    orders: PaginatedOrders
   }
 >
 
@@ -20,8 +24,15 @@ export class FetchAllOrdersUseCase {
   async execute({
     startDate,
     endDate,
+    page,
+    pageSize,
   }: FetchAllOrdersUseCaseRequest): Promise<FetchAllOrdersUseCaseResponse> {
-    const orders = await this.ordersRepository.findAll(startDate, endDate)
+    const orders = await this.ordersRepository.findAll(
+      startDate,
+      endDate,
+      page,
+      pageSize,
+    )
 
     return right({
       orders,

@@ -14,8 +14,17 @@ export class FetchAllOrdersHandler {
     const parsedParams = JSON.parse(queryParams)
 
     if (parsedParams) {
-      parsedParams.startDate = new Date(parsedParams.startDate)
-      parsedParams.endDate = new Date(parsedParams.endDate)
+      const { startDate, endDate, page, pageSize } = parsedParams
+
+      if (startDate && endDate) {
+        parsedParams.startDate = new Date(startDate)
+        parsedParams.endDate = new Date(endDate)
+      }
+
+      if (page && pageSize) {
+        parsedParams.page = Number(page)
+        parsedParams.pageSize = Number(pageSize)
+      }
     }
 
     const orders = await this.fetchAllOrdersController.handle(
