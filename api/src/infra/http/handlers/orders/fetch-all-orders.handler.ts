@@ -33,6 +33,12 @@ export class FetchAllOrdersHandler {
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': 'http://localhost:5173',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Credentials': 'true',
+      },
       body: JSON.stringify(orders),
     } as APIGatewayProxyResult
   }

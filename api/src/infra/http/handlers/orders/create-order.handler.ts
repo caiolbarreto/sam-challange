@@ -17,7 +17,16 @@ export class CreateOrderHandler {
 
     await this.createOrderController.handle(parsedBody)
 
-    return { statusCode: 201 } as APIGatewayProxyResult
+    return {
+      statusCode: 201,
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': 'http://localhost:5173',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Credentials': 'true',
+      },
+      body: '',
+    } as APIGatewayProxyResult
   }
 }
 

@@ -25,6 +25,12 @@ export class FetchAllSnacksHandler {
     return {
       statusCode: 200,
       body: JSON.stringify(snacks),
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': 'http://localhost:5173',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Credentials': 'true',
+      },
     } as APIGatewayProxyResult
   }
 }

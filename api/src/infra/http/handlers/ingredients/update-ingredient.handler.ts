@@ -17,7 +17,16 @@ export class UpdateIngredientHandler {
       content: parsedBody,
     })
 
-    return { statusCode: 204 } as APIGatewayProxyResult
+    return {
+      statusCode: 204,
+      headers: {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': 'http://localhost:5173',
+        'Access-Control-Allow-Methods': 'PATCH',
+        'Access-Control-Allow-Credentials': 'true',
+      },
+      body: '',
+    } as APIGatewayProxyResult
   }
 }
 
