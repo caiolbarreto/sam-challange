@@ -59,7 +59,11 @@ export class PrismaOrdersRepository implements OrdersRepository {
     const orders = await this.prisma.order.findMany({
       where: whereCondition,
       include: {
-        orderSnacks: true,
+        orderSnacks: {
+          include: {
+            snack: true,
+          },
+        },
       },
       skip,
       take: pageSize,

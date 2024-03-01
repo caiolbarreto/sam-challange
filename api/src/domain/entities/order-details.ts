@@ -1,11 +1,19 @@
 import { UniqueEntityID } from '../../core/unique-entity-id'
 import { ValueObject } from '../../core/value-object'
-import { OrderSnacks } from './order-snacks'
+import { Snack } from './snack'
+
+export type OrderSnacksDetails = {
+  id: UniqueEntityID
+  orderId: UniqueEntityID
+  snackId: UniqueEntityID
+  quantity: number
+  snack: Snack
+}
 
 export interface OrderDetailsProps {
   orderId: UniqueEntityID
   date: Date
-  orderSnacks: OrderSnacks[]
+  orderSnacks: OrderSnacksDetails[]
 }
 
 export class OrderDetails extends ValueObject<OrderDetailsProps> {
